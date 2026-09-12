@@ -15,4 +15,5 @@ import java.time.LocalDateTime;
 public class SlotResponse {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String status;
 }
