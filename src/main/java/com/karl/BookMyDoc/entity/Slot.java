@@ -13,15 +13,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "users")
-public class User {
+@Table(name = "slots")
+public class Slot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long u_id;
-    private String username;
-    private String email;
-    private String role;
-    private String profilePictureUrl;
-    private String password;
-    private LocalDateTime createdAt;
+    private Long s_id;
+
+    @ManyToOne
+    @JoinColumn(name = "doc_id", nullable = false)
+    private User doctor;
+
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    private String status;
 }

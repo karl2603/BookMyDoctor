@@ -15,7 +15,7 @@ import lombok.Setter;
 public class DoctorProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long d_id;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true, nullable = false)
