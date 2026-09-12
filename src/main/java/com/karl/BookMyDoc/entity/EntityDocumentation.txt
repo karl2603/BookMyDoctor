@@ -1,0 +1,11 @@
+Entities
+User
+Doctor Profile
+Slot
+Booking
+
+Entity Relationship
+
+User 1-1 Doctor Profile
+Doctor 1-M Slots
+User 1-M Booking
