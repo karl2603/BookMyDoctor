@@ -31,9 +31,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterUserRequest> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) throws IOException {
+    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) throws IOException {
         authService.registerUser(registerUserRequest);
-        return new ResponseEntity<>(registerUserRequest,HttpStatus.CREATED);
+        return new ResponseEntity<>("User registered successfully",HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

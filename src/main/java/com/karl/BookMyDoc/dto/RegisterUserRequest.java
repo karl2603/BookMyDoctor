@@ -24,6 +24,4 @@ public class RegisterUserRequest {
     @NotBlank(message = "Enter password")
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
-
-    private MultipartFile profilePicture;
 }

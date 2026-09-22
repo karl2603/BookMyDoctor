@@ -1,5 +1,7 @@
 package com.karl.BookMyDoc.service;
 
+import com.karl.BookMyDoc.dto.LoginRequest;
+import com.karl.BookMyDoc.dto.LoginResponse;
 import com.karl.BookMyDoc.dto.RegisterUserRequest;
 import com.karl.BookMyDoc.entity.User;
 import com.karl.BookMyDoc.repository.UserRepository;
@@ -17,8 +19,6 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private FileStorageService fileStorageService;
     //Password Encoder
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
@@ -27,9 +27,12 @@ public class AuthService {
         user.setUsername(registerUserRequest.getUsername());
         user.setEmail(registerUserRequest.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(registerUserRequest.getPassword()));
-        user.setRole("USER");
+        user.setRole("PATIENT");
         user.setCreatedAt(LocalDateTime.now());
-        user.setProfilePictureUrl(fileStorageService.saveProfilePicture(registerUserRequest.getProfilePicture()));
         userRepository.save(user);
+    }
+
+    public LoginResponse loginUser(LoginRequest loginRequest){
+
     }
 }
