@@ -42,11 +42,13 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    public LoginResponse loginUser(LoginRequest loginRequest){
+    public String loginUser(LoginRequest loginRequest){
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
         Authentication authentication = authManager.authenticate(authToken);
         if(authentication.isAuthenticated()){
             String jwtToken = jwtService.generateToken(loginRequest.getEmail());
+            return jwtToken;
         }
+        return null;
     }
 }
