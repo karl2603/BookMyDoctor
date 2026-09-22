@@ -5,8 +5,12 @@ import com.karl.BookMyDoc.dto.LoginResponse;
 import com.karl.BookMyDoc.dto.RegisterUserRequest;
 import com.karl.BookMyDoc.entity.User;
 import com.karl.BookMyDoc.repository.UserRepository;
+import com.karl.BookMyDoc.security.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +21,13 @@ import java.time.LocalDateTime;
 @Slf4j
 public class AuthService {
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthenticationManager authManager;
 
     //Password Encoder
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
@@ -33,6 +43,10 @@ public class AuthService {
     }
 
     public LoginResponse loginUser(LoginRequest loginRequest){
-
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
+        Authentication authentication = authManager.authenticate(authToken);
+        if(authentication.isAuthenticated()){
+            String jwtToken = jwtService.generateToken(loginRequest.getEmail());
+        }
     }
 }
