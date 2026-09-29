@@ -50,6 +50,6 @@ public class AuthService {
             String jwtToken = jwtService.generateToken(loginRequest.getEmail());
             return jwtToken;
         }
-        return null;
+        return "Invalid Credentials";
     }
 }
