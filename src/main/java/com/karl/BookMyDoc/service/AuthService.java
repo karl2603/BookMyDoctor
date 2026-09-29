@@ -33,6 +33,7 @@ public class AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     public void registerUser(RegisterUserRequest registerUserRequest) throws IOException {
+        if(userRepository.findByEmail(registerUserRequest.getEmail()) != null) throw new RuntimeException("Email Id already exists");
         User user = new User();
         user.setUsername(registerUserRequest.getUsername());
         user.setEmail(registerUserRequest.getEmail());
