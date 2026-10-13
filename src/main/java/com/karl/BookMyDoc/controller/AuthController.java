@@ -1,7 +1,6 @@
 package com.karl.BookMyDoc.controller;
 
 import com.karl.BookMyDoc.dto.LoginRequest;
-import com.karl.BookMyDoc.dto.LoginResponse;
 import com.karl.BookMyDoc.dto.RegisterUserRequest;
 import com.karl.BookMyDoc.service.AuthService;
 import jakarta.validation.Valid;

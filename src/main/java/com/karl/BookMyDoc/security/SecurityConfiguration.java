@@ -35,10 +35,14 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/auth/register",
-                                "/api/auth/login"
-                        ).permitAll()
+                        // AuthController
+                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/home").hasRole("PATIENT")
+
+                        // DoctorController: specific rule BEFORE the wildcard
+                        .requestMatchers("/api/doctors/profile").hasRole("PATIENT")
+                        .requestMatchers("/api/doctors/**").hasRole("DOCTOR")
+
                         .anyRequest().authenticated()
                 )
 
