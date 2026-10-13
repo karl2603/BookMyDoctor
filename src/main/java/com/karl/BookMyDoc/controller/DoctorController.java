@@ -28,4 +28,6 @@ public class DoctorController {
         DoctorProfileResponse doctorProfileResponse = doctorService.createDocProfile(doctorProfileRequest);
         return new ResponseEntity<>(doctorProfileResponse, HttpStatus.CREATED);
     }
+
+
 }

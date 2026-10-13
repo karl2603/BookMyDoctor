@@ -1,0 +1,9 @@
+Implemented
+
+1.Jwt Authentication
+2.User Register
+3.User Login
+4.Doctor Profile Register
+
+Pending
+1.Slot Creation
