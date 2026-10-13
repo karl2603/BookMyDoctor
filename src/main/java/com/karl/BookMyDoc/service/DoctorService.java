@@ -24,17 +24,16 @@ public class DoctorService {
     public DoctorProfileResponse createDocProfile(DoctorProfileRequest doctorProfileRequest){
         //Checking duplicates
         String emailId = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(doctorProfileRepository.findByEmail(emailId) != null) throw new RuntimeException("Doctor Profile already exists");
         //Accessing User Information and updating role to Doctor
         User doctor = userRepository.findByEmail(emailId);
         doctor.setRole("DOCTOR");
         //Saving DoctorProfile to Database
         DoctorProfile doctorProfile = new DoctorProfile();
         doctorProfile.setUser(doctor);
-        doctorProfile.setClinicName(doctorProfile.getClinicName());
+        doctorProfile.setClinicName(doctorProfileRequest.getClinicName());
         doctorProfile.setClinicAddress(doctorProfileRequest.getClinicAddress());
         doctorProfile.setSpecialization(doctorProfileRequest.getSpecialization());
-        doctorProfile.setConsultationFee(doctorProfile.getConsultationFee());
+        doctorProfile.setConsultationFee(doctorProfileRequest.getConsultationFee());
         doctorProfileRepository.save(doctorProfile);
         //Returning DoctorProfileResponse
         return new DoctorProfileResponse(doctorProfile.getUser().getUsername(), doctorProfile.getClinicName(), doctorProfile.getClinicAddress(), doctorProfile.getSpecialization(), doctorProfile.getConsultationFee());

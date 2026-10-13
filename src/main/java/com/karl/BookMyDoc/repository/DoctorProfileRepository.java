@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DoctorProfileRepository extends JpaRepository<DoctorProfile, Long> {
-    DoctorProfile findByEmail(String email);
 }
