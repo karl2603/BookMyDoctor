@@ -32,7 +32,7 @@ public class Booking {
     @JoinColumn(name = "patient_id", nullable = false)
     private User patient;
 
-    @NotBlank(message = "Booking status is required")
+    @NotNull(message = "Booking status is required")
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 

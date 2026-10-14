@@ -33,7 +33,7 @@ public class Slot {
     @NotNull(message = "End time is required")
     private LocalDateTime endTime;
 
-    @NotBlank(message = "Status is required")
+    @NotNull(message = "Status is required")
     @Enumerated(EnumType.STRING)
     private SlotStatus status;
 }

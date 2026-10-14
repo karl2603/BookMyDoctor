@@ -4,6 +4,7 @@ import com.karl.BookMyDoc.dto.SlotRequest;
 import com.karl.BookMyDoc.dto.SlotResponse;
 import com.karl.BookMyDoc.entity.Slot;
 import com.karl.BookMyDoc.entity.User;
+import com.karl.BookMyDoc.enums.SlotStatus;
 import com.karl.BookMyDoc.repository.SlotRepository;
 import com.karl.BookMyDoc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class SlotService {
         slot.setDoctor(user);
         slot.setStartTime(slotRequest.getStartTime());
         slot.setEndTime(slotRequest.getEndTime());
-        slot.setStatus("AVAILABLE");
+        slot.setStatus(SlotStatus.AVAILABLE);
         slotRepository.save(slot);
         //Returning Slot response
         return new SlotResponse(slotRequest.getStartTime(), slotRequest.getEndTime(), slot.getStatus());
