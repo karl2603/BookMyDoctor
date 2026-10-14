@@ -1,5 +1,6 @@
 package com.karl.BookMyDoc.dto;
 
+import com.karl.BookMyDoc.enums.SlotStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,5 +16,5 @@ import java.time.LocalDateTime;
 public class SlotResponse {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String status;
+    private SlotStatus status;
 }
