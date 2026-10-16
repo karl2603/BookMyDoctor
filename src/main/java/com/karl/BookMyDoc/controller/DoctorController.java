@@ -3,7 +3,6 @@ package com.karl.BookMyDoc.controller;
 import com.karl.BookMyDoc.dto.DoctorProfileRequest;
 import com.karl.BookMyDoc.dto.DoctorProfileResponse;
 import com.karl.BookMyDoc.dto.SlotResponse;
-import com.karl.BookMyDoc.entity.Slot;
 import com.karl.BookMyDoc.repository.SlotRepository;
 import com.karl.BookMyDoc.service.DoctorService;
 import jakarta.validation.Valid;
