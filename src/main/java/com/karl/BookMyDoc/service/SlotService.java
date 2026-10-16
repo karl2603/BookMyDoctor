@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,5 +46,15 @@ public class SlotService {
         slotRepository.save(slot);
         //Returning Slot response
         return new SlotResponse(slotRequest.getStartTime(), slotRequest.getEndTime(), slot.getStatus());
+    }
+
+    public List<SlotResponse> getSlots(Long doctorId){
+        List<Slot> slots = slotRepository.getSlots(doctorId);
+        List<SlotResponse> slotResponses = new ArrayList<>();
+        for(int i=0; i<slots.size(); i++){
+            SlotResponse slotResponse = new SlotResponse(slots.get(i).getStartTime(), slots.get(i).getEndTime(), slots.get(i).getStatus());
+            slotResponses.add(slotResponse);
+        }
+        return slotResponses;
     }
 }
