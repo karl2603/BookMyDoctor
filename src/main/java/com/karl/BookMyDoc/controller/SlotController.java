@@ -19,8 +19,10 @@ public class SlotController {
     @Autowired
     private SlotService slotService;
 
+    //Create Slots by doctors
     @PostMapping("/slots")
     public ResponseEntity<SlotResponse> createSlot(@Valid @RequestBody SlotRequest slotRequest){
         return new ResponseEntity<>(slotService.createSlot(slotRequest), HttpStatus.CREATED);
     }
+
 }
