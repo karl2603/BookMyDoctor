@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class SlotService {
         //Returning Slot response
         return new SlotResponse(slotRequest.getStartTime(), slotRequest.getEndTime(), slot.getStatus());
     }
-
+    //Get All Slots
     public List<SlotResponse> getSlots(Long doctorId){
         List<Slot> slots = slotRepository.getSlots(doctorId);
         List<SlotResponse> slotResponses = new ArrayList<>();
@@ -57,4 +59,26 @@ public class SlotService {
         }
         return slotResponses;
     }
+    //Get Available Slots on that day
+    public List<SlotResponse> getAvailableSlots(Long doctorId, LocalDate date) {
+        LocalDateTime dayStart = date.atStartOfDay();
+        LocalDateTime nextDayStart = date.plusDays(1).atStartOfDay();
+
+        List<Slot> slots =
+                slotRepository.findSlotsForDoctorOnDate(
+                        doctorId,
+                        dayStart,
+                        nextDayStart,
+                        SlotStatus.AVAILABLE
+                );
+
+        List<SlotResponse> responses = new ArrayList<>();
+
+        for(int i=0; i<slots.size(); i++){
+            Slot slot = slots.get(i);
+            SlotResponse slotResponse = new SlotResponse(slot.getStartTime(), slot.getEndTime(), slot.getStatus());
+            responses.add(slotResponse);
+        }
+        return responses;
+        }
 }

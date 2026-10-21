@@ -1,6 +1,7 @@
 package com.karl.BookMyDoc.repository;
 
 import com.karl.BookMyDoc.entity.Slot;
+import com.karl.BookMyDoc.enums.SlotStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +25,7 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
     List<Slot> findSlotsForDoctorOnDate(
             @Param("doctorId") Long doctorId,
             @Param("dayStart") LocalDateTime dayStart,
-            @Param("nextDayStart") LocalDateTime nextDayStart
-    );
+            @Param("nextDayStart") LocalDateTime nextDayStart,
+            @Param("status") SlotStatus slotStatus
+            );
 }
