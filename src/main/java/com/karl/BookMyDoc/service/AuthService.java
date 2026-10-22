@@ -1,7 +1,6 @@
 package com.karl.BookMyDoc.service;
 
 import com.karl.BookMyDoc.dto.LoginRequest;
-import com.karl.BookMyDoc.dto.LoginResponse;
 import com.karl.BookMyDoc.dto.RegisterUserRequest;
 import com.karl.BookMyDoc.entity.User;
 import com.karl.BookMyDoc.repository.UserRepository;

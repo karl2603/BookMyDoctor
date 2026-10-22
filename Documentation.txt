@@ -1,0 +1,12 @@
+Implemented
+
+1.Jwt Authentication
+2.User Register
+3.User Login
+4.Doctor Profile Register
+5.Slot Creation
+6.Doctor MySlots
+
+
+Pending
+1.View slots by patients per day

@@ -1,5 +1,6 @@
 package com.karl.BookMyDoc.entity;
 
+import com.karl.BookMyDoc.enums.SlotStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +33,7 @@ public class Slot {
     @NotNull(message = "End time is required")
     private LocalDateTime endTime;
 
-    @NotBlank(message = "Status is required")
-    private String status;
+    @NotNull(message = "Status is required")
+    @Enumerated(EnumType.STRING)
+    private SlotStatus status;
 }

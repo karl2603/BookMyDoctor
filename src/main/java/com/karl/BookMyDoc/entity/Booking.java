@@ -1,5 +1,6 @@
 package com.karl.BookMyDoc.entity;
 
+import com.karl.BookMyDoc.enums.BookingStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,8 +32,9 @@ public class Booking {
     @JoinColumn(name = "patient_id", nullable = false)
     private User patient;
 
-    @NotBlank(message = "Booking status is required")
-    private String booking_status;
+    @NotNull(message = "Booking status is required")
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus;
 
     private LocalDateTime bookedAt;
 }
