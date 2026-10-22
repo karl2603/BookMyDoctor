@@ -57,6 +57,10 @@ public class BookingService {
         booking.setBookedAt(LocalDateTime.now());
         bookingRepository.save(booking);
 
+        //Updating Slot
+        slot.setStatus(SlotStatus.BOOKED);
+        slotRepository.save(slot);
+
         //Retrieving Doctor And Clinic Details
         DoctorProfile doctor = doctorProfileRepository.findByUser(slot.getDoctor());
 
@@ -69,7 +73,7 @@ public class BookingService {
                 booking.getSlot().getStartTime(),
                 booking.getSlot().getEndTime(),
                 BookingStatus.CONFIRMED,
-                LocalDateTime.now()
+                booking.getBookedAt()
         );
     }
 }
