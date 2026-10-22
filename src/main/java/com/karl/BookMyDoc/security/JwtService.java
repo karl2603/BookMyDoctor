@@ -13,6 +13,7 @@ import java.util.Date;
 @Service
 @Slf4j
 public class JwtService {
+    private final SecretKey secretKey;
 
     SecretKey secretKey;
 
