@@ -3,6 +3,7 @@ package com.karl.BookMyDoc.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -35,14 +36,21 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
 
                 .authorizeHttpRequests(auth -> auth
-                        // AuthController
-                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/home").hasRole("PATIENT")
+                        // Public
+                        .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
 
-                        // DoctorController: specific rule BEFORE the wildcard
-                        .requestMatchers("/api/doctors/profile").hasRole("PATIENT")
-                        .requestMatchers("/api/doctors/**").hasRole("DOCTOR")
+                        // Patient only
+                        .requestMatchers(HttpMethod.GET, "/api/auth/home").hasRole("PATIENT")
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/doctors/*/availableslots",
+                                "/api/doctors/*/allslots").hasRole("PATIENT")
+                        .requestMatchers(HttpMethod.POST, "/api/bookings").hasRole("PATIENT")
 
+                        // Doctor only
+                        .requestMatchers(HttpMethod.GET, "/api/doctors/home", "/api/doctors/mySlots").hasRole("DOCTOR")
+                        .requestMatchers(HttpMethod.POST, "/api/slots").hasRole("DOCTOR")
+
+                        // Everything else: any logged-in user with a valid JWT
                         .anyRequest().authenticated()
                 )
 

@@ -42,6 +42,9 @@ public class BookingService {
         //Checking Slot
         if(slot == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Slot not found");
 
+        //Concurrency Check
+        // try { Thread.sleep(10000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        
         //Checking Slot Availability
         if(slot.getStatus() != SlotStatus.AVAILABLE) throw  new ResponseStatusException(HttpStatus.CONFLICT, "Slot is no longer available");
 

@@ -28,8 +28,7 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
     List<Slot> findSlotsForDoctorOnDate(
             @Param("doctorId") Long doctorId,
             @Param("dayStart") LocalDateTime dayStart,
-            @Param("nextDayStart") LocalDateTime nextDayStart,
-            @Param("status") SlotStatus slotStatus
+            @Param("nextDayStart") LocalDateTime nextDayStart
             );
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)

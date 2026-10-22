@@ -68,8 +68,7 @@ public class SlotService {
                 slotRepository.findSlotsForDoctorOnDate(
                         doctorId,
                         dayStart,
-                        nextDayStart,
-                        SlotStatus.AVAILABLE
+                        nextDayStart
                 );
 
         List<SlotResponse> responses = new ArrayList<>();
