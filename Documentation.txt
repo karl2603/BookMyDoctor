@@ -6,7 +6,7 @@ Implemented
 4.Doctor Profile Register
 5.Slot Creation
 6.Doctor MySlots
-
+7.View slots by patients per day
 
 Pending
-1.View slots by patients per day
+1.Concurrency supported slot booking
