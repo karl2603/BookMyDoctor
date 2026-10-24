@@ -21,6 +21,7 @@ public class SecurityConfiguration {
     private JwtFilter jwtFilter;
 
     //Custom Security Filer Chain
+
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
@@ -36,28 +37,60 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
 
                 .authorizeHttpRequests(auth -> auth
-                        // Public
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
 
-                        // Patient only
-                        .requestMatchers(HttpMethod.GET, "/api/auth/home").hasRole("PATIENT")
-                        .requestMatchers(HttpMethod.GET,
+                        // Public endpoints
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/auth/register",
+                                "/api/auth/login"
+                        ).permitAll()
+
+                        // Patient-only endpoints
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/auth/home"
+                        ).hasRole("PATIENT")
+
+                        .requestMatchers(
+                                HttpMethod.GET,
                                 "/api/doctors/*/availableslots",
-                                "/api/doctors/*/allslots").hasRole("PATIENT")
-                        .requestMatchers(HttpMethod.POST, "/api/bookings").hasRole("PATIENT")
+                                "/api/doctors/*/allslots"
+                        ).hasRole("PATIENT")
 
-                        // Doctor only
-                        .requestMatchers(HttpMethod.GET, "/api/doctors/home", "/api/doctors/mySlots").hasRole("DOCTOR")
-                        .requestMatchers(HttpMethod.POST, "/api/slots").hasRole("DOCTOR")
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/bookings"
+                        ).hasRole("PATIENT")
 
-                        // Everything else: any logged-in user with a valid JWT
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/bookings/mybookings"
+                        ).hasRole("PATIENT")
+
+                        // Doctor-only endpoints
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/doctors/home",
+                                "/api/doctors/mySlots"
+                        ).hasRole("DOCTOR")
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/slots"
+                        ).hasRole("DOCTOR")
+
+                        // All other requests require authentication
                         .anyRequest().authenticated()
                 )
 
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(
+                        jwtFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         return http.build();
     }
+
 
     //DaoAuthProvider
     @Bean
