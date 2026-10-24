@@ -45,7 +45,7 @@ public class DoctorService {
         doctorProfile.setConsultationFee(doctorProfileRequest.getConsultationFee());
         doctorProfileRepository.save(doctorProfile);
         //Returning DoctorProfileResponse
-        return new DoctorProfileResponse(doctorProfile.getUser().getUsername(), doctorProfile.getClinicName(), doctorProfile.getClinicAddress(), doctorProfile.getSpecialization(), doctorProfile.getConsultationFee());
+        return new DoctorProfileResponse(doctor.getU_id(), doctorProfile.getUser().getUsername(), doctorProfile.getClinicName(), doctorProfile.getClinicAddress(), doctorProfile.getSpecialization(), doctorProfile.getConsultationFee());
     }
 
     public List<SlotResponse> getMySlots(){
@@ -58,5 +58,22 @@ public class DoctorService {
             slotResponses.add(slotResponse);
         }
         return slotResponses;
+    }
+
+    //Patient sees all the doctors
+    public List<DoctorProfileResponse> getDoctors(){
+        List<DoctorProfile> doctors = doctorProfileRepository.findAllDoctorProfiles();
+        List<DoctorProfileResponse> response = new ArrayList<>();
+        for(int i=0; i<doctors.size(); i++){
+            response.add(new DoctorProfileResponse(
+                    doctors.get(i).getUser().getU_id(),
+                    doctors.get(i).getUser().getUsername(),
+                    doctors.get(i).getClinicName(),
+                    doctors.get(i).getClinicAddress(),
+                    doctors.get(i).getSpecialization(),
+                    doctors.get(i).getConsultationFee()
+            ));
+        }
+        return response;
     }
 }

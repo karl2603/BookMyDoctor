@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DoctorProfileResponse {
+    private Long id;
     private String doctorName;
     private String clinicName;
     private String clinicAddress;

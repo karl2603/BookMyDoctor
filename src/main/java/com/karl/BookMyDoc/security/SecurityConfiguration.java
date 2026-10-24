@@ -79,6 +79,8 @@ public class SecurityConfiguration {
                                 "/api/slots"
                         ).hasRole("DOCTOR")
 
+                        .requestMatchers(HttpMethod.GET, "/api/doctors/doctors").hasRole("PATIENT")
+
                         // All other requests require authentication
                         .anyRequest().authenticated()
                 )

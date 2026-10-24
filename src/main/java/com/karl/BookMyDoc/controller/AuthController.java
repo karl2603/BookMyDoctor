@@ -15,6 +15,7 @@ import java.io.IOException;
 @RestController
 @Slf4j
 @RequestMapping("/api/auth")
+@CrossOrigin("http://localhost:5173/")
 public class AuthController {
 
     @Autowired
