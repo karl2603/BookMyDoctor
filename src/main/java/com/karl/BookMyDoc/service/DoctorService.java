@@ -54,7 +54,7 @@ public class DoctorService {
         List<Slot> slots = slotRepository.getSlots(doctor.getU_id());
         List<SlotResponse> slotResponses = new ArrayList<>();
         for(int i=0; i<slots.size(); i++){
-            SlotResponse slotResponse = new SlotResponse(slots.get(i).getStartTime(), slots.get(i).getEndTime(), slots.get(i).getStatus());
+            SlotResponse slotResponse = new SlotResponse(slots.get(i).getS_id(), slots.get(i).getStartTime(), slots.get(i).getEndTime(), slots.get(i).getStatus());
             slotResponses.add(slotResponse);
         }
         return slotResponses;

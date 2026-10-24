@@ -1,5 +1,6 @@
 package com.karl.BookMyDoc.dto;
 
+import com.karl.BookMyDoc.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,10 @@ public class BookingResponse {
 
     private Long id;
     private String doctorName;
-    private String specialization;
+    private String clinicName;
+    private String clinicAddress;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String status;
+    private BookingStatus status;
     private LocalDateTime bookedAt;
 }

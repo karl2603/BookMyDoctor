@@ -7,11 +7,13 @@ import com.karl.BookMyDoc.repository.UserRepository;
 import com.karl.BookMyDoc.security.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -32,7 +34,12 @@ public class AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     public void registerUser(RegisterUserRequest registerUserRequest) throws IOException {
-        if(userRepository.findByEmail(registerUserRequest.getEmail()) != null) throw new RuntimeException("Email Id already exists");
+        if (userRepository.findByEmail(registerUserRequest.getEmail()) != null) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Email Id already exists"
+            );
+        }
         User user = new User();
         user.setUsername(registerUserRequest.getUsername());
         user.setEmail(registerUserRequest.getEmail());

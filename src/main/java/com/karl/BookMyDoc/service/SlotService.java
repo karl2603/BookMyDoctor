@@ -47,14 +47,14 @@ public class SlotService {
         }
         slotRepository.save(slot);
         //Returning Slot response
-        return new SlotResponse(slotRequest.getStartTime(), slotRequest.getEndTime(), slot.getStatus());
+        return new SlotResponse(slot.getS_id(), slotRequest.getStartTime(), slotRequest.getEndTime(), slot.getStatus());
     }
     //Get All Slots
     public List<SlotResponse> getSlots(Long doctorId){
         List<Slot> slots = slotRepository.getSlots(doctorId);
         List<SlotResponse> slotResponses = new ArrayList<>();
         for(int i=0; i<slots.size(); i++){
-            SlotResponse slotResponse = new SlotResponse(slots.get(i).getStartTime(), slots.get(i).getEndTime(), slots.get(i).getStatus());
+            SlotResponse slotResponse = new SlotResponse(slots.get(i).getS_id(), slots.get(i).getStartTime(), slots.get(i).getEndTime(), slots.get(i).getStatus());
             slotResponses.add(slotResponse);
         }
         return slotResponses;
@@ -68,15 +68,14 @@ public class SlotService {
                 slotRepository.findSlotsForDoctorOnDate(
                         doctorId,
                         dayStart,
-                        nextDayStart,
-                        SlotStatus.AVAILABLE
+                        nextDayStart
                 );
 
         List<SlotResponse> responses = new ArrayList<>();
 
         for(int i=0; i<slots.size(); i++){
             Slot slot = slots.get(i);
-            SlotResponse slotResponse = new SlotResponse(slot.getStartTime(), slot.getEndTime(), slot.getStatus());
+            SlotResponse slotResponse = new SlotResponse(slot.getS_id(), slot.getStartTime(), slot.getEndTime(), slot.getStatus());
             responses.add(slotResponse);
         }
         return responses;

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class SlotResponse {
+    private Long slotId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private SlotStatus status;
