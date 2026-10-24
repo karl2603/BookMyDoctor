@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BookingService {
@@ -35,6 +37,7 @@ public class BookingService {
     @Autowired
     private DoctorProfileRepository doctorProfileRepository;
 
+    //Concurrent Slot Booking
     @Transactional
     public BookingResponse bookSlot(BookingRequest bookingRequest){
         //Locking a slot (concurrency), @Lock PESSIMISTIC_WRITE is used to lock the slot
@@ -78,5 +81,26 @@ public class BookingService {
                 BookingStatus.CONFIRMED,
                 booking.getBookedAt()
         );
+    }
+
+    //Get Patient Bookings
+    public List<BookingResponse> myBookings(){
+        String emailId = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Booking> bookings = bookingRepository.findBookingsByPatient(emailId);
+        List<BookingResponse> response = new ArrayList<>();
+        for(int i=0; i<bookings.size(); i++){
+            DoctorProfile doctor = doctorProfileRepository.findByUser(bookings.get(i).getSlot().getDoctor());
+            response.add(new BookingResponse(
+                    bookings.get(i).getB_id(),
+                    doctor.getUser().getUsername(),
+                    doctor.getClinicName(),
+                    doctor.getClinicAddress(),
+                    bookings.get(i).getSlot().getStartTime(),
+                    bookings.get(i).getSlot().getEndTime(),
+                    bookings.get(i).getBookingStatus(),
+                    bookings.get(i).getBookedAt()
+            ));
+        }
+        return response;
     }
 }
