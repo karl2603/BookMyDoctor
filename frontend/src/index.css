@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Outfit Variable", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans Variable", system-ui, sans-serif;
+  --color-brand: #f34259;
+  --color-brand-600: #dc2a45;
+  --color-brand-700: #b81f38;
+  --color-brand-100: #ffe0e5;
+  --color-brand-50: #fff1f3;
+  --color-ink: #372e37;
+  --color-ink-900: #211b22;
+  --color-mute: #6e6670;
+  --color-line: #ece6e9;
+  --color-bg: #fcfafa;
+  --color-ok: #0f9b6c;
+  --color-ok-50: #e6f7ef;
+  --shadow-soft: 0 1px 2px rgb(55 46 55 / .05), 0 10px 28px -12px rgb(55 46 55 / .16);
+  --shadow-lift: 0 2px 4px rgb(55 46 55 / .05), 0 24px 48px -16px rgb(55 46 55 / .26);
+  --shadow-brand: 0 12px 28px -10px rgb(243 66 89 / .65);
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-bg text-ink font-sans antialiased; font-variant-numeric: tabular-nums; }
+::selection { background: var(--color-brand-100); }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .6s cubic-bezier(.2,.7,.2,1) both; }
+.hatch { background-image: repeating-linear-gradient(135deg, transparent 0 7px, rgb(55 46 55 / .06) 7px 8px); }
+.dots { background-image: radial-gradient(rgb(55 46 55 / .12) 1px, transparent 1.5px); background-size: 22px 22px; }
+
+@layer components {
+  .eyebrow { @apply inline-flex items-center gap-2 rounded-full bg-brand-50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand; }
+  .label { @apply mb-2 block text-sm font-semibold text-ink; }
+  .input { @apply w-full rounded-xl border border-line bg-white px-4 py-3.5 text-[15px] outline-none transition placeholder:text-mute/60 focus:border-brand focus:ring-4 focus:ring-brand/15; }
+  .btn { @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-ink-900 hover:shadow-lift active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-brand { @apply bg-brand shadow-brand hover:bg-brand-600; }
+  .btn-ghost { @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-line bg-white px-7 py-3.5 text-sm font-semibold text-ink transition hover:border-ink active:scale-[.98]; }
+  .pill { @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold; }
+  .card { @apply rounded-3xl border border-line bg-white shadow-soft; }
+  .page { @apply mx-auto max-w-6xl px-6 py-14 md:px-10 md:py-16; }
+  .h1 { @apply font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl; }
+  .h2 { @apply font-display text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl; }
+  .msg { @apply rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm font-medium text-brand-700; }
+}
+
+@keyframes marquee { to { transform: translateX(-50%); } }
