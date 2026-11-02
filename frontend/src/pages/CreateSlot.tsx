@@ -3,13 +3,6 @@ import { CalendarPlus, Check } from 'lucide-react'
 import { useState } from 'react';
 import { api, errMsg, today, type SlotRequest } from '../api';
 
-
-// YOUR PART. The page and form markup are done — the logic is yours:
-// TODO 1: define a `SlotRequest` interface and add `createSlot` to the `api` object in src/api.ts
-//         (POST /slots, body { startTime, endTime } as "yyyy-MM-ddTHH:mm:ss").
-// TODO 2: add state for `error`, `success` and `busy`, then uncomment the message blocks in the JSX.
-// TODO 3: in handleSubmit read the two inputs (datetime-local gives "2026-10-24T18:00"),
-//         call createSlot, reset the form, and show the backend message on 400 / 409.
 export default function CreateSlot() {
   
   const [startTime, setStartTime] = useState<string>('');
