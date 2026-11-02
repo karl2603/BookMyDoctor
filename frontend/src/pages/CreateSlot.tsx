@@ -1,5 +1,8 @@
 import type { FormEvent } from 'react'
-import { CalendarPlus } from 'lucide-react'
+import { CalendarPlus, Check } from 'lucide-react'
+import { useState } from 'react';
+import {api, errMsg, type SlotRequest} from '../api';
+
 
 // YOUR PART. The page and form markup are done — the logic is yours:
 // TODO 1: define a `SlotRequest` interface and add `createSlot` to the `api` object in src/api.ts
@@ -8,8 +11,27 @@ import { CalendarPlus } from 'lucide-react'
 // TODO 3: in handleSubmit read the two inputs (datetime-local gives "2026-10-24T18:00"),
 //         call createSlot, reset the form, and show the backend message on 400 / 409.
 export default function CreateSlot() {
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const f = new FormData(e.currentTarget);
+    const slot: SlotRequest = {
+      'startTime' : String(f.get('startTime'))+":00",
+      'endTime' : String(f.get('endTime'))+":00"
+    };
+
+    try{
+      await api.createSlots(slot);
+      setSuccess(true);
+    }
+    catch(e){
+      setError(errMsg(error));
+    }
+
+    e.currentTarget.reset();
   }
 
   return (
@@ -39,8 +61,8 @@ export default function CreateSlot() {
           <div><label className="label" htmlFor="startTime">Starts</label><input id="startTime" name="startTime" type="datetime-local" required className="input" /></div>
           <div><label className="label" htmlFor="endTime">Ends</label><input id="endTime" name="endTime" type="datetime-local" required className="input" /></div>
 
-          {/* {error && <p className="msg">{error}</p>} */}
-          {/* {success && <p className="flex items-center gap-2 rounded-xl bg-ok-50 px-4 py-3 text-sm font-medium text-ok"><Check size={16} />Slot created.</p>} */}
+          {error && <p className="msg">{error}</p>}
+          {success && <p className="flex items-center gap-2 rounded-xl bg-ok-50 px-4 py-3 text-sm font-medium text-ok"><Check size={16} />Slot created.</p>}
 
           <button className="btn btn-brand w-full !py-4">Create slot</button>
         </form>

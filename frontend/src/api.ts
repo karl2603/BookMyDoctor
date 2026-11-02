@@ -1,5 +1,20 @@
 export type Role = 'PATIENT' | 'DOCTOR'
+
 export type Slot = { slotId: number; startTime: string; endTime: string; status: string }
+
+export interface SlotRequest{
+  startTime: string,
+  endTime: string
+};
+
+export interface SlotResponse{
+  slotId: number,
+  startTime: string,
+  endTime: string,
+  status: string
+};
+
+
 export type Booking = {
   id: number; doctorName: string; clinicName: string; clinicAddress: string
   startTime: string; endTime: string; status: string; bookedAt: string
@@ -58,10 +73,10 @@ export const api = {
   return list.map(({ id, doctorName, ...d }) => ({ ...d, doctorId: id, name: doctorName }))
 },
   allSlots: (doctorId: string | number) => request<Slot[]>(`/doctors/${doctorId}/allslots`),
+  createSlots: (slot: SlotRequest) => request<SlotResponse>(`/slots`, 'POST', slot),
   book: (slotId: number) => request<Booking>('/bookings', 'POST', { slotId }),
   myBookings: () => request<Booking[]>('/bookings/mybookings'),
   mySlots: () => request<Slot[]>('/doctors/mySlots'),
-  // TODO (you): createSlot goes here
 }
 
 export const errMsg = (x: unknown) => (x instanceof ApiError ? x.message : 'Could not reach the server')
