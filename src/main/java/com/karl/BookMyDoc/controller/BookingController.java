@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("http://localhost:5173/")
 public class BookingController {
     @Autowired
     private BookingService bookingService;

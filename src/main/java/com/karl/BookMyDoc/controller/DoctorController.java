@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/api/doctors")
+@CrossOrigin("http://localhost:5173/")
 public class DoctorController {
 
     @Autowired
@@ -24,6 +25,12 @@ public class DoctorController {
 
     @Autowired
     private SlotRepository slotRepository;
+
+    //Patient sees all docs
+    @GetMapping("/doctors")
+    List<DoctorProfileResponse> getDoctors(){
+        return doctorService.getDoctors();
+    }
 
     @GetMapping("/home")
     public String home(){
