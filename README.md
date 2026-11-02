@@ -195,6 +195,22 @@ BookMyDoc/
 
 Follow these steps to run BookMyDoc locally.
 
+## Demo Accounts
+
+BookMyDoc supports two types of users: Patients and Doctors.
+
+### Patient Account
+
+Patients can register directly through the application's registration page and log in using their registered credentials.
+
+### Doctor Accounts
+
+Doctor accounts are seeded manually into the database using the provided SQL script.
+
+To populate the seven sample doctor accounts, execute:
+
+`docs/demo-data.sql`
+
 ### Prerequisites
 
 Make sure you have the following installed:
