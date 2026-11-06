@@ -38,6 +38,14 @@ public class SecurityConfiguration {
 
                 .authorizeHttpRequests(auth -> auth
 
+                        // Swagger / OpenAPI documentation
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml"
+                        ).permitAll()
+
                         // Public endpoints
                         .requestMatchers(
                                 HttpMethod.POST,
