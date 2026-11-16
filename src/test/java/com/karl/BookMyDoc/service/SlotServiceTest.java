@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +52,43 @@ public class SlotServiceTest {
         Mockito.when(slotRepository.getSlots(1L)).thenReturn(Collections.emptyList());
         List <SlotResponse> slotResponses = slotService.getSlots(1L);
 
-        Assertions.assertEquals(0, slotResponses.size());
+        Assertions.assertTrue(slotResponses.isEmpty());
+    }
+
+    @Test
+    public void getAvailableSlots_shouldReturnSlotResponses(){
+        LocalDate date = LocalDate.of(2026, 11, 20);
+        LocalDateTime dayStart = date.atStartOfDay();
+        LocalDateTime nextDayStart = date.plusDays(1).atStartOfDay();
+
+        Slot slot = new Slot(
+                1L,
+                null,
+                LocalDateTime.of(2026, 11, 20, 10, 0),
+                LocalDateTime.of(2026, 11, 20, 10, 30),
+                SlotStatus.AVAILABLE
+        );
+
+        Mockito.when(slotRepository.findSlotsForDoctorOnDate(1L, dayStart, nextDayStart)).thenReturn(List.of(slot));
+
+        List<SlotResponse> slotResponses = slotService.getAvailableSlots(1L, date);
+
+        Assertions.assertEquals(1, slotResponses.size());
+        Assertions.assertEquals(1L, slotResponses.get(0).getSlotId());
+        Assertions.assertEquals(slot.getStartTime(), slotResponses.get(0).getStartTime());
+        Assertions.assertEquals(slot.getEndTime(), slotResponses.get(0).getEndTime());
+        Assertions.assertEquals(slot.getStatus(), slotResponses.get(0).getStatus());
+    }
+
+    @Test
+    public void getAvailableSlots_shouldReturnEmptyList(){
+        LocalDate date = LocalDate.of(2026, 11, 20);
+        LocalDateTime dayStart = date.atStartOfDay();
+        LocalDateTime nextDayStart = date.plusDays(1).atStartOfDay();
+
+        Mockito.when(slotRepository.findSlotsForDoctorOnDate(1L, dayStart, nextDayStart)).thenReturn(List.of());
+        List<SlotResponse> slotResponses = slotService.getAvailableSlots(1L, date);
+
+        Assertions.assertTrue(slotResponses.isEmpty());
     }
 }
