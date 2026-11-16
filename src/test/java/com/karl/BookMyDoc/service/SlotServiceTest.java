@@ -14,7 +14,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class SlotServiceTest {
@@ -42,5 +44,13 @@ public class SlotServiceTest {
         Assertions.assertEquals(slot.getStartTime(), slotResponses.get(0).getStartTime());
         Assertions.assertEquals(slot.getEndTime(), slotResponses.get(0).getEndTime());
         Assertions.assertEquals(slot.getStatus(), slotResponses.get(0).getStatus());
+    }
+
+    @Test
+    public void getSlots_shouldReturnEmptyList(){
+        Mockito.when(slotRepository.getSlots(1L)).thenReturn(Collections.emptyList());
+        List <SlotResponse> slotResponses = slotService.getSlots(1L);
+
+        Assertions.assertEquals(0, slotResponses.size());
     }
 }
