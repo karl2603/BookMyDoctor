@@ -12,12 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class SlotServiceTest {
@@ -90,5 +91,13 @@ public class SlotServiceTest {
         List<SlotResponse> slotResponses = slotService.getAvailableSlots(1L, date);
 
         Assertions.assertTrue(slotResponses.isEmpty());
+    }
+
+    @Test
+    public void createSlot_shouldThrowExceptionWhenStartTimeIsAfterEndTime(){
+        SlotRequest slotRequest = new SlotRequest(
+                LocalDateTime.of(2026, 11, 20, 11, 0),
+                LocalDateTime.of(2026, 11, 20, 10, 30));
+        Assertions.assertThrows(ResponseStatusException.class, () -> slotService.createSlot(slotRequest));
     }
 }
